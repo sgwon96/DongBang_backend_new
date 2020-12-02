@@ -10,11 +10,13 @@ const prisma = new PrismaClient();
      signIn: async (_, args) => {
        const { email, password } = args;
        const user = await prisma.user.findUnique({
-            email 
+            where:{
+                email
+            }
         });
        const passwordTrue = bcrypt.compare(password, user.encryptedPassword)
        if (passwordTrue) {
-         return generateToken(user.id);
+         return "success";
        } else {
          throw Error("Wrong email/secret combination");
        }
