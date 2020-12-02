@@ -7,29 +7,106 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
+model clubmember {
+  A Int
+  B Int
+
+  @@unique([A, B], name: "_ClubMember_AB_unique")
+  @@index([B], name: "_ClubMember_B_index")
+  @@map("_clubmember")
+}
+
+model roomtouser {
+  A Int
+  B Int
+
+  @@unique([A, B], name: "_RoomToUser_AB_unique")
+  @@index([B], name: "_RoomToUser_B_index")
+  @@map("_roomtouser")
+}
+
+model answer {
+  content       String
+  answerId      Int    @id @default(autoincrement())
+  applicationId Int
+}
+
+model application {
+  createdAt     DateTime @default(now())
+  userId        Int
+  clubId        Int
+  applicationId Int      @id @default(autoincrement())
+}
+
+model club {
+  clubName    String
+  clubBio     String @default("")
+  description String @default("")
+  type        String @default("")
+  clubImage   String @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
+  logoImage   String @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
+  userId      Int    @unique
+  clubId      Int    @id @default(autoincrement())
+}
+
+model clubaddinfo {
+  party           Boolean @default(false)
+  partyDay        String
+  clubPhoneNumber String
+  socialUrl       String
+  numberOfMembers Int
+  clubId          Int     @unique
+  isUnion         Boolean @default(false)
+  email           String
+  clubAddInfoId   Int     @id @default(autoincrement())
+}
+
+model message {
+  text      String
   createdAt DateTime @default(now())
-  content   String?
-  published Boolean  @default(false)
-  authorId  Int
-  User      User     @relation(fields: [authorId], references: [id])
-
-  @@index([authorId], name: "authorId")
+  fromId    Int
+  roomId    Int
+  toId      Int
+  messageId Int      @id @default(autoincrement())
 }
 
-model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  userId Int     @unique
-  User   User    @relation(fields: [userId], references: [id])
+model option {
+  content    String
+  questionId Int
+  optionId   Int    @id @default(autoincrement())
 }
 
-model User {
-  id      Int      @id @default(autoincrement())
-  name    String?
-  email   String   @unique
-  Post    Post[]
-  Profile Profile?
+model post {
+  title     String
+  content   String
+  type      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  userId    Int
+  clubId    Int
+  file      String
+  postId    Int      @id @default(autoincrement())
+}
+
+model question {
+  type       String
+  clubId     Int
+  content    String
+  questionId Int    @id @default(autoincrement())
+}
+
+model room {
+  roomId Int @id @default(autoincrement())
+}
+
+model user {
+  email             String
+  encryptedPassword String  @default("")
+  userName          String
+  studentNumber     String  @default("")
+  userPhoneNumber   String  @default("")
+  university        String  @default("")
+  major             String  @default("")
+  auth              Boolean
+  userId            Int     @id @default(autoincrement())
 }
