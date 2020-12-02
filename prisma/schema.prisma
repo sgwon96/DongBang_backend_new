@@ -31,82 +31,97 @@ model answer {
   applicationId Int
 }
 
-model application {
+model Application {
+  applicationId Int      @id @default(autoincrement())
   createdAt     DateTime @default(now())
   userId        Int
   clubId        Int
-  applicationId Int      @id @default(autoincrement())
+
+  @@index([clubId], name: "clubId")
+  @@index([userId], name: "userId")
 }
 
-model club {
-  clubName    String
-  clubBio     String @default("")
-  description String @default("")
-  type        String @default("")
-  clubImage   String @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
-  logoImage   String @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
-  userId      Int    @unique
-  clubId      Int    @id @default(autoincrement())
+model Club {
+  clubId                  Int    @id @default(autoincrement())
+  clubName                String
+  clubBio                 String @default("")
+  description             String @default("")
+  type                    String @default("")
+  clubImage               String @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
+  logoImage               String @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
+  application_description String @default("")
+  userId                  Int    @unique
 }
 
-model clubaddinfo {
+model ClubAddInfo {
+  clubAddInfoId   Int     @id @default(autoincrement())
   party           Boolean @default(false)
   partyDay        String
   clubPhoneNumber String
   socialUrl       String
-  numberOfMembers Int
-  clubId          Int     @unique
   isUnion         Boolean @default(false)
+  numberOfMembers Int
   email           String
-  clubAddInfoId   Int     @id @default(autoincrement())
+  clubId          Int     @unique
 }
 
-model message {
+model Message {
+  messageId Int      @id @default(autoincrement())
   text      String
   createdAt DateTime @default(now())
   fromId    Int
-  roomId    Int
   toId      Int
-  messageId Int      @id @default(autoincrement())
+  roomId    Int
+
+  @@index([fromId], name: "fromId")
+  @@index([roomId], name: "roomId")
+  @@index([toId], name: "toId")
 }
 
-model option {
+model Option {
+  optionId   Int    @id @default(autoincrement())
   content    String
   questionId Int
-  optionId   Int    @id @default(autoincrement())
+
+  @@index([questionId], name: "questionId")
 }
 
-model post {
+model Post {
   title     String
-  content   String
-  type      String
   createdAt DateTime @default(now())
+  content   String
+  postId    Int      @id @default(autoincrement())
+  file      String
+  type      String
   updatedAt DateTime @default(now())
   userId    Int
   clubId    Int
-  file      String
-  postId    Int      @id @default(autoincrement())
+
+  @@index([clubId], name: "clubId")
+  @@index([userId], name: "userId")
 }
 
-model question {
+model Question {
+  questionId Int    @id @default(autoincrement())
+  content    String
   type       String
   clubId     Int
-  content    String
-  questionId Int    @id @default(autoincrement())
+
+  @@index([clubId], name: "clubId")
 }
 
-model room {
+model Room {
   roomId Int @id @default(autoincrement())
 }
 
-model user {
-  email             String
+model User {
+  email             String  @unique
+  userId            Int     @id @default(autoincrement())
   encryptedPassword String  @default("")
-  userName          String
+  userName          String  @default("")
   studentNumber     String  @default("")
   userPhoneNumber   String  @default("")
   university        String  @default("")
   major             String  @default("")
-  auth              Boolean
-  userId            Int     @id @default(autoincrement())
+  auth              Boolean @default(false)
 }
