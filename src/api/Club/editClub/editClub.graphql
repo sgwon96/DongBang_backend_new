@@ -1,0 +1,17 @@
+type Mutation {
+    editClub (
+        clubName: String,
+        clubBio: String,
+        description: String,
+        type: String,
+        logoImage: String,
+        clubImage: String,
+        userId: Int,
+        action: ACTIONS!
+    ) : Club!
+}
+
+enum ACTIONS {
+    EDIT
+    DELETE
+}
