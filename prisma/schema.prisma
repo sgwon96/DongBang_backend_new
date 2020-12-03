@@ -7,15 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model clubmember {
-  A Int
-  B Int
-
-  @@unique([A, B], name: "_ClubMember_AB_unique")
-  @@index([B], name: "_ClubMember_B_index")
-  @@map("_clubmember")
-}
-
 model roomtouser {
   A Int
   B Int
@@ -40,13 +31,29 @@ model application {
 
 model club {
   clubName    String
-  clubBio     String @default("")
-  description String @default("")
-  type        String @default("")
-  clubImage   String @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
-  logoImage   String @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
-  userId      Int    @unique
-  clubId      Int    @id @default(autoincrement())
+  clubBio     String       @default("")
+  description String       @default("")
+  type        String       @default("")
+  clubImage   String       @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
+  logoImage   String       @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
+  clubId      Int          @id @default(autoincrement())
+  masterId    Int?         @unique @default(0)
+  master      user?        @relation("ClubMaster", fields: [masterId], references: [userId])
+  clubmember  clubmember[] @relation("clubmemberToclub")
+}
+
+model user {
+  userId            Int          @id @default(autoincrement())
+  email             String
+  encryptedPassword String       @default("")
+  userName          String
+  studentNumber     String       @default("")
+  userPhoneNumber   String       @default("")
+  university        String       @default("")
+  major             String       @default("")
+  auth              Boolean
+  clubmember        clubmember[]
+  masterClub        club?        @relation("ClubMaster")
 }
 
 model clubaddinfo {
@@ -99,14 +106,13 @@ model room {
   roomId Int @id @default(autoincrement())
 }
 
-model user {
-  email             String
-  encryptedPassword String  @default("")
-  userName          String
-  studentNumber     String  @default("")
-  userPhoneNumber   String  @default("")
-  university        String  @default("")
-  major             String  @default("")
-  auth              Boolean
-  userId            Int     @id @default(autoincrement())
+model clubmember {
+  A    Int
+  B    Int
+  club club @relation("clubmemberToclub", fields: [A], references: [clubId])
+  user user @relation(fields: [B], references: [userId])
+
+  @@unique([A, B], name: "_ClubMember_AB_unique")
+  @@index([B], name: "_ClubMember_B_index")
+  @@map("_clubmember")
 }
