@@ -4,4 +4,4 @@ dotenv.config({ path: path.resolve(__dirname, ".env") });
 import jwt from "jsonwebtoken";
 
 
-export const generateToken = id => jwt.sign({ id }, process.env.JWT_SECRET);
+export const generateToken = userId => jwt.sign({ userId }, process.env.JWT_SECRET);

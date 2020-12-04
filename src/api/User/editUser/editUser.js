@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
        const { userName, studentNumber, userPhoneNumber, major, university } = args;
        const { user } = request;
        return prisma.user.update({
-         where: { id: user.id },
+         where: { userId: user.userId },
          data: { userName, studentNumber, userPhoneNumber, major, university }
        });
      }
