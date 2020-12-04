@@ -16,7 +16,7 @@ const prisma = new PrismaClient();
         });
        const passwordTrue = bcrypt.compare(password, user.encryptedPassword)
        if (passwordTrue) {
-         return "success";
+        return generateToken(user.id);
        } else {
          throw Error("Wrong email/secret combination");
        }
