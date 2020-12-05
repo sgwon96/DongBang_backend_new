@@ -7,19 +7,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model clubmember {
-  A Int
-  B Int
-
-  @@unique([A, B], name: "_ClubMember_AB_unique")
-  @@index([B], name: "_ClubMember_B_index")
-  @@map("_clubmember")
-}
-
 model roomtouser {
   A Int
   B Int
-
   @@unique([A, B], name: "_RoomToUser_AB_unique")
   @@index([B], name: "_RoomToUser_B_index")
   @@map("_roomtouser")
@@ -31,97 +21,96 @@ model answer {
   applicationId Int
 }
 
-model Application {
-  applicationId Int      @id @default(autoincrement())
+model application {
   createdAt     DateTime @default(now())
   userId        Int
   clubId        Int
-
-  @@index([clubId], name: "clubId")
-  @@index([userId], name: "userId")
+  applicationId Int      @id @default(autoincrement())
 }
 
-model Club {
-  clubId                  Int    @id @default(autoincrement())
-  clubName                String
-  clubBio                 String @default("")
-  description             String @default("")
-  type                    String @default("")
-  clubImage               String @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
-  logoImage               String @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
-  application_description String @default("")
-  userId                  Int    @unique
+model club {
+  clubName    String
+  clubBio     String       @default("")
+  description String       @default("")
+  type        String       @default("")
+  clubImage   String       @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
+  logoImage   String       @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
+  clubId      Int          @id @default(autoincrement())
+  masterId    Int?         @unique @default(0)
+  master      user?        @relation("ClubMaster", fields: [masterId], references: [userId])
+  clubmember  clubmember[] @relation("clubmemberToclub")
 }
 
-model ClubAddInfo {
-  clubAddInfoId   Int     @id @default(autoincrement())
+model user {
+  userId            Int          @id @default(autoincrement())
+  email             String       @default("")
+  encryptedPassword String       @default("")
+  userName          String       @default("")
+  studentNumber     String       @default("")
+  userPhoneNumber   String       @default("")
+  university        String       @default("")
+  major             String       @default("")
+  auth              Boolean      @default(false)
+  clubmember        clubmember[]  
+  masterClub        club?        @relation("ClubMaster")
+}
+
+model clubaddinfo {
   party           Boolean @default(false)
   partyDay        String
   clubPhoneNumber String
   socialUrl       String
-  isUnion         Boolean @default(false)
   numberOfMembers Int
-  email           String
   clubId          Int     @unique
+  isUnion         Boolean @default(false)
+  email           String
+  clubAddInfoId   Int     @id @default(autoincrement())
 }
 
-model Message {
-  messageId Int      @id @default(autoincrement())
+model message {
   text      String
   createdAt DateTime @default(now())
   fromId    Int
-  toId      Int
   roomId    Int
-
-  @@index([fromId], name: "fromId")
-  @@index([roomId], name: "roomId")
-  @@index([toId], name: "toId")
+  toId      Int
+  messageId Int      @id @default(autoincrement())
 }
 
-model Option {
-  optionId   Int    @id @default(autoincrement())
+model option {
   content    String
   questionId Int
-
-  @@index([questionId], name: "questionId")
+  optionId   Int    @id @default(autoincrement())
 }
 
-model Post {
+model post {
   title     String
-  createdAt DateTime @default(now())
   content   String
-  postId    Int      @id @default(autoincrement())
-  file      String
   type      String
+  createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   userId    Int
   clubId    Int
-
-  @@index([clubId], name: "clubId")
-  @@index([userId], name: "userId")
+  file      String
+  postId    Int      @id @default(autoincrement())
 }
 
-model Question {
-  questionId Int    @id @default(autoincrement())
-  content    String
+model question {
   type       String
   clubId     Int
-
-  @@index([clubId], name: "clubId")
+  content    String
+  questionId Int    @id @default(autoincrement())
 }
 
-model Room {
+model room {
   roomId Int @id @default(autoincrement())
 }
 
-model User {
-  email             String  @unique
-  userId            Int     @id @default(autoincrement())
-  encryptedPassword String  @default("")
-  userName          String  @default("")
-  studentNumber     String  @default("")
-  userPhoneNumber   String  @default("")
-  university        String  @default("")
-  major             String  @default("")
-  auth              Boolean @default(false)
+model clubmember {
+  A    Int
+  B    Int
+  club club @relation("clubmemberToclub", fields: [A], references: [clubId])
+  user user @relation(fields: [B], references: [userId])
+  @@unique([A, B], name: "_ClubMember_AB_unique")
+  @@index([B], name: "_ClubMember_B_index")
+  @@map("_clubmember")
 }
