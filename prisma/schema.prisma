@@ -4,12 +4,24 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = "mysql://dbback:ehd1qkd2@localhost:3306/dongbang_db"
+}
+
+model clubmember {
+  A    Int
+  B    Int
+  club club @relation("clubmemberToclub", fields: [A], references: [clubId])
+  user user @relation(fields: [B], references: [userId])
+
+  @@unique([A, B], name: "_ClubMember_AB_unique")
+  @@index([B], name: "_ClubMember_B_index")
+  @@map("_clubmember")
 }
 
 model roomtouser {
   A Int
   B Int
+
   @@unique([A, B], name: "_RoomToUser_AB_unique")
   @@index([B], name: "_RoomToUser_B_index")
   @@map("_roomtouser")
@@ -37,22 +49,8 @@ model club {
   logoImage   String       @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
   clubId      Int          @id @default(autoincrement())
   masterId    Int?         @unique @default(0)
-  master      user?        @relation("ClubMaster", fields: [masterId], references: [userId])
+  user        user?        @relation(fields: [masterId], references: [userId])
   clubmember  clubmember[] @relation("clubmemberToclub")
-}
-
-model user {
-  userId            Int          @id @default(autoincrement())
-  email             String       @default("")
-  encryptedPassword String       @default("")
-  userName          String       @default("")
-  studentNumber     String       @default("")
-  userPhoneNumber   String       @default("")
-  university        String       @default("")
-  major             String       @default("")
-  auth              Boolean      @default(false)
-  clubmember        clubmember[]  
-  masterClub        club?        @relation("ClubMaster")
 }
 
 model clubaddinfo {
@@ -105,12 +103,16 @@ model room {
   roomId Int @id @default(autoincrement())
 }
 
-model clubmember {
-  A    Int
-  B    Int
-  club club @relation("clubmemberToclub", fields: [A], references: [clubId])
-  user user @relation(fields: [B], references: [userId])
-  @@unique([A, B], name: "_ClubMember_AB_unique")
-  @@index([B], name: "_ClubMember_B_index")
-  @@map("_clubmember")
+model user {
+  userId            Int          @id @default(autoincrement())
+  email             String       @unique @default("")
+  encryptedPassword String       @default("")
+  userName          String       @default("")
+  studentNumber     String       @default("")
+  userPhoneNumber   String       @default("")
+  university        String       @default("")
+  major             String       @default("")
+  auth              Boolean      @default(false)
+  clubmember        clubmember[]
+  club              club?
 }
