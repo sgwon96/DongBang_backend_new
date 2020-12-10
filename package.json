@@ -29,6 +29,7 @@
     "prisma-m": "npx prisma migrate dev --preview-feature",
     "prisma-p": "npx prisma db push --preview-feature",
     "prisma-g": "npx prisma generate",
-    "prisma-a": "yarn prisma-m && yarn prisma-p && yarn prisma-g"
+    "prisma-a": "yarn prisma-m && yarn prisma-p && yarn prisma-g",
+    "prisma-i": "npx prisma introspect"
   }
 }

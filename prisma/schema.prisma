@@ -4,115 +4,117 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://dbback:ehd1qkd2@localhost:3306/dongbang_db"
+  url      = env("DATABASE_URL")
 }
 
-model clubmember {
-  A    Int
-  B    Int
-  club club @relation("clubmemberToclub", fields: [A], references: [clubId])
-  user user @relation(fields: [B], references: [userId])
+model prisma_migrations {
+  applied_steps_count Int       @default(0)
+  checksum            String
+  finished_at         DateTime?
+  id                  String    @id
+  logs                String?
+  migration_name      String
+  rolled_back_at      DateTime?
+  started_at          DateTime  @default(dbgenerated())
 
-  @@unique([A, B], name: "_ClubMember_AB_unique")
-  @@index([B], name: "_ClubMember_B_index")
-  @@map("_clubmember")
+  @@map("_prisma_migrations")
 }
 
 model roomtouser {
   A Int
   B Int
 
-  @@unique([A, B], name: "_RoomToUser_AB_unique")
   @@index([B], name: "_RoomToUser_B_index")
   @@map("_roomtouser")
+  @@unique([A, B], name: "_RoomToUser_AB_unique")
 }
 
 model answer {
-  content       String
-  answerId      Int    @id @default(autoincrement())
+  answerId      Int    @default(autoincrement()) @id
   applicationId Int
+  content       String
 }
 
 model application {
-  createdAt     DateTime @default(now())
-  userId        Int
+  applicationId Int      @default(autoincrement()) @id
   clubId        Int
-  applicationId Int      @id @default(autoincrement())
+  createdAt     DateTime @default(dbgenerated())
+  userId        Int
 }
 
 model club {
-  clubName    String
-  clubBio     String       @default("")
-  description String       @default("")
-  type        String       @default("")
-  clubImage   String       @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
-  logoImage   String       @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
-  clubId      Int          @id @default(autoincrement())
-  masterId    Int?         @unique @default(0)
-  user        user?        @relation(fields: [masterId], references: [userId])
-  clubmember  clubmember[] @relation("clubmemberToclub")
+  clubBio         String @default("")
+  clubId          Int    @default(autoincrement()) @id
+  clubImage       String @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
+  clubName        String
+  description     String @default("")
+  logoImage       String @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
+  masterId        Int?   @default(0) @unique
+  type            String @default("")
+  user_clubTouser user?  @relation(fields: [masterId], references: [userId])
+  user_clubmember user[] @relation("clubmember", references: [userId])
 }
 
 model clubaddinfo {
+  clubAddInfoId   Int     @default(autoincrement()) @id
+  clubId          Int     @unique
+  clubPhoneNumber String
+  email           String
+  isUnion         Boolean @default(false)
+  numberOfMembers Int
   party           Boolean @default(false)
   partyDay        String
-  clubPhoneNumber String
   socialUrl       String
-  numberOfMembers Int
-  clubId          Int     @unique
-  isUnion         Boolean @default(false)
-  email           String
-  clubAddInfoId   Int     @id @default(autoincrement())
 }
 
 model message {
-  text      String
-  createdAt DateTime @default(now())
+  createdAt DateTime @default(dbgenerated())
   fromId    Int
+  messageId Int      @default(autoincrement()) @id
   roomId    Int
+  text      String
   toId      Int
-  messageId Int      @id @default(autoincrement())
 }
 
 model option {
   content    String
+  optionId   Int    @default(autoincrement()) @id
   questionId Int
-  optionId   Int    @id @default(autoincrement())
 }
 
 model post {
-  title     String
-  content   String
-  type      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  userId    Int
   clubId    Int
+  content   String
+  createdAt DateTime @default(dbgenerated())
   file      String
-  postId    Int      @id @default(autoincrement())
+  postId    Int      @default(autoincrement()) @id
+  title     String
+  type      String
+  updatedAt DateTime @default(dbgenerated())
+  userId    Int
 }
 
 model question {
-  type       String
   clubId     Int
   content    String
-  questionId Int    @id @default(autoincrement())
+  questionId Int    @default(autoincrement()) @id
+  type       String
 }
 
 model room {
-  roomId Int @id @default(autoincrement())
+  roomId Int @default(autoincrement()) @id
 }
 
 model user {
-  userId            Int          @id @default(autoincrement())
-  email             String       @unique @default("")
-  encryptedPassword String       @default("")
-  userName          String       @default("")
-  studentNumber     String       @default("")
-  userPhoneNumber   String       @default("")
-  university        String       @default("")
-  major             String       @default("")
-  auth              Boolean      @default(false)
-  clubmember        clubmember[]
-  club              club?
+  auth              Boolean @default(false)
+  email             String  @default("") @unique
+  encryptedPassword String  @default("")
+  major             String  @default("")
+  studentNumber     String  @default("")
+  university        String  @default("")
+  userId            Int     @default(autoincrement()) @id
+  userName          String  @default("")
+  userPhoneNumber   String  @default("")
+  club_clubTouser   club?
+  club_clubmember   club[]  @relation("clubmember", references: [clubId])
 }
