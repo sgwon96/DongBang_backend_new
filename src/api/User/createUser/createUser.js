@@ -7,19 +7,20 @@ const prisma = new PrismaClient();
  export default {
    Mutation: {
      createUser: async (_, args) => {
-       const { email, password, auth} = args;
-       if(auth){
+       const { email, password, userName, university, major, userPhoneNumber, studentNumber} = args;
          const encryptedPassword = await bcrypt.hash(password,SALTROUNDS);
          const user = await prisma.user.create({
              data:{
                 email,
-                encryptedPassword
+                encryptedPassword,
+                userName,
+                university,
+                major,
+                userPhoneNumber,
+                studentNumber
              }    
          });
          return user;
-       } else {
-        throw Error();
-       }
      }
    }
  };

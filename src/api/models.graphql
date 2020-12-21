@@ -9,7 +9,6 @@ type User {
   major: String
   applications: [Application]
   rooms: [Room]
-  auth: Boolean
   fromMessage: [Message]
   toMessage: [Message]
   masterClub: Club

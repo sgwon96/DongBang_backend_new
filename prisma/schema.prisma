@@ -112,7 +112,6 @@ model user {
   userPhoneNumber   String       @default("")
   university        String       @default("")
   major             String       @default("")
-  auth              Boolean      @default(false)
   clubmember        clubmember[]
   club              club?
 }
