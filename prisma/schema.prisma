@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://dbback:ehd1qkd2@localhost:3306/dongbang_db"
+  url      = env("DATABASE_URL")
 }
 
 model clubmember {
@@ -29,28 +29,57 @@ model roomtouser {
 
 model answer {
   content       String
-  answerId      Int    @id @default(autoincrement())
+  answerId      Int         @id @default(autoincrement())
   applicationId Int
+  application   application @relation(fields: [applicationId], references: [applicationId])
 }
 
 model application {
-  createdAt     DateTime @default(now())
+  applicationId Int      @id @default(autoincrement())
   userId        Int
   clubId        Int
-  applicationId Int      @id @default(autoincrement())
+  answers       answer[]
+  createdAt     DateTime @default(now())
+  user          user     @relation(fields: [userId], references: [userId])
+  club          club     @relation(fields: [clubId], references: [clubId])
 }
 
 model club {
-  clubName    String
-  clubBio     String       @default("")
-  description String       @default("")
-  type        String       @default("")
-  clubImage   String       @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
-  logoImage   String       @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
-  clubId      Int          @id @default(autoincrement())
-  masterId    Int?         @unique @default(0)
-  user        user?        @relation(fields: [masterId], references: [userId])
-  clubmember  clubmember[] @relation("clubmemberToclub")
+  clubName     String
+  clubBio      String        @default("")
+  description  String        @default("")
+  type         String        @default("")
+  clubImage    String        @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
+  logoImage    String        @default("https://3.bp.blogspot.com/-qtEejOg1NHA/Xobmg2y_QeI/AAAAAAAAIVE/UFKPvpeHjKUqCEFOX8lT4MsKz-PwpEGJgCLcBGAsYHQ/s1600/default_user.png")
+  clubId       Int           @id @default(autoincrement())
+  masterId     Int           @unique @default(0)
+  master       user          @relation(fields: [masterId], references: [userId])
+  clubmember   clubmember[]  @relation("clubmemberToclub")
+  questions    question[]
+  applications application[]
+}
+
+model question {
+  questionId Int      @id @default(autoincrement())
+  content    String
+  type       String
+  clubId     Int
+  options    option[]
+  club       club     @relation(fields: [clubId], references: [clubId])
+}
+
+model user {
+  userId            Int           @id @default(autoincrement())
+  email             String        @unique @default("")
+  encryptedPassword String        @default("")
+  userName          String        @default("")
+  studentNumber     String        @default("")
+  userPhoneNumber   String        @default("")
+  university        String        @default("")
+  major             String        @default("")
+  clubmember        clubmember[]
+  club              club?
+  applications      application[]
 }
 
 model clubaddinfo {
@@ -75,9 +104,10 @@ model message {
 }
 
 model option {
+  optionId   Int      @id @default(autoincrement())
   content    String
   questionId Int
-  optionId   Int    @id @default(autoincrement())
+  question   question @relation(fields: [questionId], references: [questionId])
 }
 
 model post {
@@ -92,26 +122,6 @@ model post {
   postId    Int      @id @default(autoincrement())
 }
 
-model question {
-  type       String
-  clubId     Int
-  content    String
-  questionId Int    @id @default(autoincrement())
-}
-
 model room {
   roomId Int @id @default(autoincrement())
-}
-
-model user {
-  userId            Int          @id @default(autoincrement())
-  email             String       @unique @default("")
-  encryptedPassword String       @default("")
-  userName          String       @default("")
-  studentNumber     String       @default("")
-  userPhoneNumber   String       @default("")
-  university        String       @default("")
-  major             String       @default("")
-  clubmember        clubmember[]
-  club              club?
 }

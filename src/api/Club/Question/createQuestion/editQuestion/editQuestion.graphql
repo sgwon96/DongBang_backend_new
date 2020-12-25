@@ -1,0 +1,8 @@
+enum ACTIONS {
+  EDIT
+  DELETE
+}
+
+type Mutation {
+  editQuestion(questionId: Int, content: String, action: ACTIONS!): Question
+}

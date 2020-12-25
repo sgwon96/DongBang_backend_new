@@ -6,9 +6,5 @@ type Mutation {
     logoImage: String
     clubImage: String
     type: String!
-    userId: Int!
   ): Club
 }
-
-# userId : 지금 당장은 id입력받기
-# User 구현되면, { request }로 현재 동아리 생성 작성하고 있는 User의 Id 받아서 저장
