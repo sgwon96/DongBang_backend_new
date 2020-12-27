@@ -4,10 +4,12 @@ const prisma = new PrismaClient();
 
 export default {
   Query: {
-    seeClubById: async (_, { id }) => {
+    seeClubById: async (_, arg) => {
+      const { clubId } = arg;
+      console.log(clubId);
       return prisma.club.findUnique({
         where: {
-          id,
+          clubId,
         },
       });
     },
