@@ -15,7 +15,7 @@ export default {
           email: email,
         },
       });
-      const passwordTrue = bcrypt.compare(password, user.encryptedPassword);
+      const passwordTrue = await bcrypt.compare(password, user.encryptedPassword);
       if (passwordTrue) {
         console.log(user);
         return generateToken(user.userId);
