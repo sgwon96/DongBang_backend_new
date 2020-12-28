@@ -8,7 +8,7 @@ export default {
         isAuthenticated(request);
         const user = request.user;
         return prisma.user.findUnique({
-            where: { userId: user.userId }
+            where: { id: user.id }
         }  
         );
     },

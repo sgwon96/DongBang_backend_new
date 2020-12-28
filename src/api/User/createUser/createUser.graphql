@@ -2,10 +2,10 @@ type Mutation {
   createUser(
      email: String!
      password: String!
-     userName: String!
+     name: String!
      university: String!
      major: String!
-     userPhoneNumber: String!
+     phoneNumber: String!
      studentNumber: String!
    ): User!
  }

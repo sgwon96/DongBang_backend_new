@@ -18,7 +18,7 @@ export default {
       const passwordTrue = await bcrypt.compare(password, user.encryptedPassword);
       if (passwordTrue) {
         console.log(user);
-        return generateToken(user.userId);
+        return generateToken(user.id);
       } else {
         throw Error("Wrong email/secret combination");
       }

@@ -1,8 +1,8 @@
 type User {
-  userId: ID!
+  id: ID!
   email: String!
   encryptedPassword: String!
-  userName: String
+  name: String
   studentNumber: String
   userPhoneNumber: String
   university: String

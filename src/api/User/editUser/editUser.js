@@ -5,11 +5,11 @@ const prisma = new PrismaClient();
    Mutation: {
      editUser: (_, args, { request, isAuthenticated }) => {
        isAuthenticated(request);
-       const { userName, studentNumber, userPhoneNumber, major, university } = args;
+       const { name, studentNumber, phoneNumber, major, university } = args;
        const { user } = request;
        return prisma.user.update({
          where: { userId: user.userId },
-         data: { userName, studentNumber, userPhoneNumber, major, university }
+         data: { name, studentNumber, phoneNumber, major, university }
        });
      }
    }

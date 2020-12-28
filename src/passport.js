@@ -14,7 +14,7 @@ import { PrismaClient } from "@prisma/client";
     try {
       const user = await prisma.user.findUnique({
         where:{
-            userId: payload.userId
+            id: payload.id
         }
     });
       if (user !== null) {

@@ -7,16 +7,16 @@ const prisma = new PrismaClient();
  export default {
    Mutation: {
      createUser: async (_, args) => {
-       const { email, password, userName, university, major, userPhoneNumber, studentNumber} = args;
+       const { email, password, name, university, major, phoneNumber, studentNumber} = args;
          const encryptedPassword = await bcrypt.hash(password,SALTROUNDS);
          const user = await prisma.user.create({
              data:{
                 email,
                 encryptedPassword,
-                userName,
+                name,
                 university,
                 major,
-                userPhoneNumber,
+                phoneNumber,
                 studentNumber
              }    
          });
