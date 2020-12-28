@@ -7,97 +7,31 @@ type User {
   userPhoneNumber: String
   university: String
   major: String
-  applications: [Application]
-  rooms: [Room]
-  fromMessage: [Message]
-  toMessage: [Message]
-  masterClub: Club
-  clubs: [Club]
-  isDeleted: Boolean
 }
 
 type Club {
-  clubId: ID!
-  clubName: String
-  clubBio: String
-  description: String
+  id: ID!
+  name: String
   type: String
-  members: [User]
+  description: String
+  content: String
   clubImage: String
   logoImage: String
-  questions: [Question]
-  applications: [Application]
-  posts: [Post]
-  master: User
-  clubAddInfo: ClubAddInfo
-  userId: Int
-  masterId: Int
-}
-
-type ClubAddInfo {
-  clubAddInfoId: ID!
-  party: Boolean
   partyDay: String
-  clubPhoneNumber: String
-  socialUrl: String
-  isUnion: Boolean
+  party: Boolean
   numberOfMembers: Int
+  isUnion: Boolean
   email: String
-  clubId: Int
-}
-
-type Room {
-  roomId: ID!
-  participants: [User]
-  messages: [Message]
-}
-
-type Message {
-  messageId: ID!
-  text: String
-  room: Room
-  createdAt: DateTime!
-  fromId: Int
-  toId: Int
-}
-
-type Option {
-  optionId: ID!
-  content: String
-  questionId: Int
-}
-
-type Question {
-  content: String
-  questionId: ID!
-  type: String
-  options: [Option]
-  clubId: Int
-}
-
-type Answer {
-  answerId: ID!
-  content: String
-  applicationId: Int
-}
-type Application {
-  applicationId: ID!
-  answer: [Answer]
-  createdAt: DateTime!
-  userId: Int
-  clubId: Int
+  phoneNumber: String
+  master: User
 }
 
 type Post {
-  postId: ID!
+  id: ID!
   title: String
   content: String
-  file: String
-  type: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  userId: Int
-  clubId: Int
+  fileUrl: String
+  author: Club
 }
 
 scalar DateTime

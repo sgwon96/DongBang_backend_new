@@ -1,8 +1,0 @@
-enum TYPE {
-  ESSAY
-  SELECT
-}
-
-type Mutation {
-  createQuestion(content: String!, type: TYPE!): Question
-}
