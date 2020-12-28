@@ -9,7 +9,7 @@ datasource db {
 
 
 model Club {
-  id                Int             @id @default(autoincrement())
+  id                Int       @id @default(autoincrement())
   name              String          
   type              String        
   description       String?        
@@ -22,28 +22,28 @@ model Club {
   isUnion           Boolean? 
   email             String          
   phoneNumber       String?
-  posts             Post[]
-  master            User?           @relation(fields: [masterId], references: [id])
-  masterId          Int?            @unique @default(0)
+  posts             Post[]       
 }
 
 model User {
-  id            Int           @id @default(autoincrement())
-  email             String        @unique 
+  id                Int       @id @default(autoincrement())
+  email             String    @unique 
   encryptedPassword String        
-  name          String        
+  name              String        
   studentNumber     String        
-  phoneNumber   String        
+  phoneNumber       String        
   university        String        
-  major             String        
+  major             String     
+  clubMaster        Club?     @relation(fields: [clubId], references: [id])
+  clubId            Int?   
 }
 
 
 model Post {
-  id                Int             @id @default(autoincrement())
+  id                Int       @id @default(autoincrement())
   title             String
   content           String
   fileUrl           String
-  author            Club?           @relation(fields: [authorId], references: [id])
+  author            Club?     @relation(fields: [authorId], references: [id])
   authorId          Int?
 }

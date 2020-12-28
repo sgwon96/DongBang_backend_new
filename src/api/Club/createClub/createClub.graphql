@@ -1,0 +1,16 @@
+type Mutation {
+  createClub(
+    name: String
+    type: String
+    description: String
+    content: String
+    clubImage: String
+    logoImage: String
+    partyDay: String
+    party: Boolean
+    numberOfMembers: Int
+    isUnion: Boolean
+    email: String
+    phoneNumber: String
+  ): Club
+}

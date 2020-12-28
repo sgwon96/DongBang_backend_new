@@ -1,0 +1,5 @@
+type Query {
+  readClub(
+  id: Int
+  ) : Club
+}
