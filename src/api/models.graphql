@@ -26,6 +26,7 @@ type Club {
   email:                String
   phoneNumber:          String
   posts:                [Post]
+  questions:            [Question]
 }
 
 type Post {
@@ -34,6 +35,44 @@ type Post {
   content:              String
   fileUrl:              String
   author:               Club
+  authorId:             Int
+}
+
+type Question {
+  id:                ID!       
+  type:              String
+  title:             String
+  choices:           [Choice]
+  club:              Club      
+  clubId:            Int
+}
+
+type Choice {
+  id:                ID!  
+  subject:           String 
+  checked:           Boolean
+  question:          Question  
+  questionId:        Int
+  answer:            [Answer] 
+}
+
+type Application {
+  id:                ID!
+  answers:           [Answer]
+  user:              User
+  userId:            Int 
+  club:              Club
+  clubId:            Int
+}
+
+type Answer {
+  id:                ID!
+  type:              String
+  answer:            String
+  application:       Application
+  applicationId:     Int
+  choice:            Choice
+  choiceId:          Int
 }
 
 scalar DateTime
