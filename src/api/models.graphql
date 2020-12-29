@@ -1,37 +1,39 @@
 type User {
-  id: ID!
-  email: String!
-  encryptedPassword: String!
-  name: String
-  studentNumber: String
-  userPhoneNumber: String
-  university: String
-  major: String
+  id:                   ID!
+  email:                String!
+  encryptedPassword:    String!
+  name:                 String
+  studentNumber:        String
+  userPhoneNumber:      String
+  university:           String
+  major:                String
+  clubMaster:           Club
+  clubId:               Int 
 }
 
 type Club {
-  id: ID!
-  name: String
-  type: String
-  description: String
-  content: String
-  clubImage: String
-  logoImage: String
-  partyDay: String
-  party: Boolean
-  numberOfMembers: Int
-  isUnion: Boolean
-  email: String
-  phoneNumber: String
-  master: User
+  id:                   ID!
+  name:                 String
+  type:                 String
+  description:          String
+  content:              String
+  clubImage:            String
+  logoImage:            String
+  partyDay:             String
+  party:                Boolean
+  numberOfMembers:      Int
+  isUnion:              Boolean
+  email:                String
+  phoneNumber:          String
+  posts:                [Post]
 }
 
 type Post {
-  id: ID!
-  title: String
-  content: String
-  fileUrl: String
-  author: Club
+  id:                   ID!
+  title:                String
+  content:              String
+  fileUrl:              String
+  author:               Club
 }
 
 scalar DateTime

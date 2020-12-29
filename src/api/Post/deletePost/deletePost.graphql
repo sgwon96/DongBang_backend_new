@@ -1,0 +1,5 @@
+type Mutation {
+  deletePost(
+  id: Int!
+  ) : Boolean
+}
