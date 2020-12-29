@@ -13,15 +13,19 @@ export default {
                 id:id
             }
         });
+
+        if(post == null){
+          throw Error("게시글이 존재하지 않습니다.");
+        }
+
         if(clubId == post.authorId){
-            await prisma.post.delete({
+            return await prisma.post.delete({
                 where: {
                   id: id,
                 },
               });
-            return true;
         } else {
-            return false;
+            throw Error("게시글 작성자가 아닙니다.");
         }
     },
   },

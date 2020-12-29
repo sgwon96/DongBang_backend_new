@@ -14,29 +14,33 @@ export default {
         fileUrl
       } = args;
       
-      const post = await prisma.post.create({
-        data: {
-            title,
-            content,
-            fileUrl,
-        },
+      if(id != null) {
+        const post = await prisma.post.create({
+          data: {
+              title,
+              content,
+              fileUrl,
+          },
+        });
+  
+        const club = await prisma.club.update({
+          where:{
+              id:id
+          },
+          data:{
+            posts:{
+                connect:{
+                    id:post.id
+                }
+            }  
+          }
       });
 
-      const club = await prisma.club.update({
-        where:{
-            id:id
-        },
-        data:{
-          posts:{
-              connect:{
-                  id:post.id
-              }
-          }  
-        }
-    });
-    console.log(club);
-
       return post;
+
+      } else {
+        throw Error("클럽 마스터가 아닙니다.");
+      }
     },
   },
 };
