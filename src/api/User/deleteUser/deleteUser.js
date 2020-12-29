@@ -14,8 +14,9 @@ export default {
                   id: id,
                 },
               });
+        } else {
+          throw Error("유저 정보가 일치하지 않습니다.");
         }
-        return false;
     },
   },
 };

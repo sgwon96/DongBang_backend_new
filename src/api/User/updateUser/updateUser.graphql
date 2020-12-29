@@ -1,5 +1,6 @@
 type Mutation {
    updateUser(
+   id:Int!
    name:String
    studentNumber: String
    phoneNumber: String

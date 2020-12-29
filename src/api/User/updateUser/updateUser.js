@@ -3,14 +3,18 @@ const prisma = new PrismaClient();
 
  export default {
    Mutation: {
-     updateUser: (_, args, { request, isAuthenticated }) => {
-       isAuthenticated(request);
-       const { name, studentNumber, phoneNumber, major, university } = args;
+     updateUser: (_, args, { request, isAuthenticated }) => {   
+       const { id,name, studentNumber, phoneNumber, major, university } = args;
        const { user } = request;
-       return prisma.user.update({
-         where: { userId: user.userId },
-         data: { name, studentNumber, phoneNumber, major, university }
-       });
+       if(user.id == id){
+        return prisma.user.update({
+          where: { userId: user.userId },
+          data: { name, studentNumber, phoneNumber, major, university }
+        });
+       }else{
+        throw Error("유저정보가 일치하지 않습니다.");
+       }
+       
      }
    }
  };
