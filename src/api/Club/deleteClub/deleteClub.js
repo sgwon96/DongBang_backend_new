@@ -8,14 +8,13 @@ export default {
         isAuthenticated(request);
         const { clubId } = request.user;
         if(clubId != null){
-            await prisma.club.delete({
+            return await prisma.club.delete({
                 where: {
                   id: clubId,
                 },
               });
-            return true;
         } else {
-            return false;
+           throw Error("동아리 회장이 아닙니다.");
         }
     },
   },

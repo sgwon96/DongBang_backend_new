@@ -7,7 +7,11 @@ export default {
     createClub: async (_, args, { request, isAuthenticated }) => {
       isAuthenticated(request);
       const { user } = request;
-      const id = user.id;
+      const isMaster = user.clubId;
+      if(isMaster != null){
+        throw Error("이 유저는 이미 동아리 회장 입니다.");
+      }
+
       const {
         name,
         type,
@@ -43,7 +47,7 @@ export default {
       const clubId = club.id
       await prisma.user.update({
         where:{
-            id:id
+            id:user.id
         },
         data:{
             clubMaster:{
