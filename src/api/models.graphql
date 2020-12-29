@@ -9,6 +9,8 @@ type User {
   major:                String
   clubMaster:           Club
   clubId:               Int 
+  application:          [Application]
+  applicationId:        Int
 }
 
 type Club {

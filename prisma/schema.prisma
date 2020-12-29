@@ -17,7 +17,9 @@ model User {
   university        String        
   major             String     
   clubMaster        Club?     @relation(fields: [clubId], references: [id])
-  clubId            Int?   
+  clubId            Int?
+  application       Application[]
+  applicationId     Int?   
 }
 
 model Club {
