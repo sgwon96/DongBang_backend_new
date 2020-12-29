@@ -1,0 +1,5 @@
+type Mutation {
+  deleteQuestion(
+  id: Int!
+  ) : Question
+}

@@ -1,0 +1,6 @@
+type Mutation {
+  createQuestion(
+    type: String!
+    title: String!
+  ): Question
+}

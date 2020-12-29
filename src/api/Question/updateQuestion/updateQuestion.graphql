@@ -1,0 +1,9 @@
+type Mutation {
+    updateQuestion(
+        id:      Int!  
+        title:   String
+        type: String
+    ): Question
+  }
+ 
+ 

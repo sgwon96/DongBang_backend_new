@@ -1,0 +1,5 @@
+type Query {
+    readQuestion(
+    id: Int
+    ) : Question
+  }
