@@ -4,11 +4,10 @@ const prisma = new PrismaClient();
 
 export default {
   Query: {
-    getUserInfo: async (_, args, { request, isAuthenticated }) => {
-        isAuthenticated(request);
-        const user = request.user;
+    readUser: async (_, args, { request, isAuthenticated }) => {
+        const { id } = args;
         return prisma.user.findUnique({
-            where: { id: user.id }
+            where: { id: id }
         }  
         );
     },

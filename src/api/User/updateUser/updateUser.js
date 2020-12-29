@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
  export default {
    Mutation: {
-     editUser: (_, args, { request, isAuthenticated }) => {
+     updateUser: (_, args, { request, isAuthenticated }) => {
        isAuthenticated(request);
        const { name, studentNumber, phoneNumber, major, university } = args;
        const { user } = request;
