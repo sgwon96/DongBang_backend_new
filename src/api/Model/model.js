@@ -9,5 +9,8 @@ export default {
    Club: {
     questions: (parent) => prisma.question.findMany({where:{clubId:parent.id}})
    },
+   Choice: {
+    question: (parent) => prisma.question.findUnique({where:{id:parent.questionId}})
+   }
    
  };

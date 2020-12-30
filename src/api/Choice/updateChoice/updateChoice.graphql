@@ -1,0 +1,7 @@
+type Mutation {
+  updateChoice(
+    id: Int!
+    subject:String
+    checked: Boolean
+  ): Choice
+}

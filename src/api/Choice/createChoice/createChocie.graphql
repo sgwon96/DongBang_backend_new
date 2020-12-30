@@ -1,0 +1,6 @@
+type Mutation {
+  createChoice(
+    questionId: Int!
+    subject:       String!
+  ): Choice
+}

@@ -1,0 +1,5 @@
+type Mutation {
+  deleteChoice(
+  id: Int!
+  ) : Choice
+}

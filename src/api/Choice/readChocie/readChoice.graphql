@@ -1,0 +1,5 @@
+type Query {
+    readChoice(
+    id: Int
+    ) : Choice
+  }
