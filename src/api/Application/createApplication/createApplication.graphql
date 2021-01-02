@@ -1,0 +1,6 @@
+type Mutation {
+  createApplication(
+    clubId: Int!
+    Answers: [AnswerInput]
+  ): Application
+}

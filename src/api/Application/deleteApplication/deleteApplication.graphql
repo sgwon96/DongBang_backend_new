@@ -1,0 +1,5 @@
+type Mutation {
+  deleteApplication(
+  id: Int!
+  ) : Application
+}

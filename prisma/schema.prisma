@@ -61,10 +61,8 @@ model Question {
 model Choice {
   id                Int       @id @default(autoincrement())
   subject           String 
-  checked           Boolean
   question          Question  @relation(fields: [questionId], references: [id])
   questionId        Int 
-  answer            Answer[]
 }
 
 model Application {
@@ -78,10 +76,9 @@ model Application {
 
 model Answer {
   id                Int         @id @default(autoincrement())
+  index             Int         
   type              String
   answer            String?
   application       Application @relation(fields: [applicationId], references: [id])
   applicationId     Int
-  choice            Choice?      @relation(fields: [choiceId], references: [id])
-  choiceId          Int?
 }

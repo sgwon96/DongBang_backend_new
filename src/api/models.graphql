@@ -4,7 +4,7 @@ type User {
   encryptedPassword:    String!
   name:                 String
   studentNumber:        String
-  userPhoneNumber:      String
+  phoneNumber:          String
   university:           String
   major:                String
   clubMaster:           Club
@@ -50,12 +50,11 @@ type Question {
 }
 
 type Choice {
-  id:                ID!  
+  id:                ID!
+  index:             Int  
   subject:           String 
-  checked:           Boolean
   question:          Question  
   questionId:        Int
-  answer:            [Answer] 
 }
 
 type Application {
@@ -69,12 +68,18 @@ type Application {
 
 type Answer {
   id:                ID!
+  index:             Int
   type:              String
   answer:            String
   application:       Application
   applicationId:     Int
-  choice:            Choice
-  choiceId:          Int
 }
+
+input AnswerInput {
+  type:             String
+  answer:           String
+  index:            Int
+}
+
 
 scalar DateTime
