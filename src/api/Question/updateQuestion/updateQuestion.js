@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
      updateQuestion: async (_, args, { request, isAuthenticated }) => {
         const {
             id,
+            index,
             title,
             type,
           } = args;
@@ -23,7 +24,7 @@ const prisma = new PrismaClient();
        if( clubId == question.clubId){
         return prisma.question.update({
             where: { id: id },
-            data: { title,type }
+            data: { index,title,type }
           });
        }else{
          throw Error("질문 작성자가 아닙니다.");

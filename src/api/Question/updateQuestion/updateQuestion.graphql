@@ -1,8 +1,9 @@
 type Mutation {
     updateQuestion(
         id:      Int!  
+        index:   Int
         title:   String
-        type: String
+        type:    String
     ): Question
   }
  
