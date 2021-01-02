@@ -27,7 +27,6 @@ export default {
         return prisma.choice.create({
             data: {
                 subject,
-                checked:false,
                 question : {
                     connect:{
                         id: questionId
