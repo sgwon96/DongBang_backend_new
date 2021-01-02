@@ -18,7 +18,7 @@ export default {
         if(clubId == question.clubId){
             return await prisma.choice.update({
                 where: { id: id },
-                data: { subject, checked }
+                data: { subject }
               });
         } else {
             throw Error("선택지 작성자가 아닙니다.");
