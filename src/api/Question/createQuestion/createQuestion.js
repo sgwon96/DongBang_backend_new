@@ -13,7 +13,7 @@ export default {
         title,
         type,
       } = args;
-      const question = await prisma.question.findFirst({where:{index:index}});
+      const question = await prisma.question.findFirst({where:{index:index, clubId:id}});
       
       if(id == null) {
         throw Error("클럽 마스터가 아닙니다.");
