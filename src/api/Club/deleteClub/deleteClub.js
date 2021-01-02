@@ -8,11 +8,9 @@ export default {
         isAuthenticated(request);
         const { clubId } = request.user;
         if(clubId != null){
-            return await prisma.club.delete({
-                where: {
-                  id: clubId,
-                },
-              });
+            const club = await prisma.club.findUnique({where:{id:clubId}});
+            await prisma.$queryRaw(`delete from Club where id = ${clubId}`);
+            return club;
         } else {
            throw Error("동아리 회장이 아닙니다.");
         }

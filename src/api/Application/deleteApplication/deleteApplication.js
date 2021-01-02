@@ -15,11 +15,8 @@ export default {
         }
 
         if( user.id == application.userId){
-            return await prisma.application.delete({
-                where: {
-                  id: id,
-                },
-              });
+            await prisma.$queryRaw(`delete from Application where id = ${id}`);
+            return application;
         } else {
             throw Error("지원서 작성자가 아닙니다.");
         }

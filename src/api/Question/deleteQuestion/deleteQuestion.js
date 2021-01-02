@@ -19,11 +19,9 @@ export default {
         }
 
         if(clubId == question.clubId){
-            return await prisma.question.delete({
-                where: {
-                  id: id,
-                },
-              });
+            const question = await prisma.question.findUnique({where:{id:id}});
+            await prisma.$queryRaw(`delete from question where id = ${id}`);
+            return question;
         } else {
             throw Error("게시글 작성자가 아닙니다.");
         }
