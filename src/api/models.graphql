@@ -44,6 +44,7 @@ type Question {
   id:                ID!       
   type:              String
   title:             String
+  index:             Int  
   choices:           [Choice]
   club:              Club      
   clubId:            Int

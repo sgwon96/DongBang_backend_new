@@ -53,6 +53,7 @@ model Question {
   id                Int       @id @default(autoincrement())
   type              String
   title             String
+  index             Int
   choices           Choice[]
   club              Club      @relation(fields: [clubId], references: [id])
   clubId            Int

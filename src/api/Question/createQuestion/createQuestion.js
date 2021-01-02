@@ -9,6 +9,7 @@ export default {
       const { user } = request;
       const id = user.clubId;
       const {
+        index,
         title,
         type,
       } = args;
@@ -18,6 +19,7 @@ export default {
       }else {
         return prisma.question.create({
           data: {
+              index,
               title,
               type,
               club : {

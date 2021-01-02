@@ -1,6 +1,7 @@
 type Mutation {
   createQuestion(
-    type: String!
-    title: String!
+    index:  Int!
+    type:   String!
+    title:  String!
   ): Question
 }
