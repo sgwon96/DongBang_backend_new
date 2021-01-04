@@ -24,7 +24,9 @@ export default {
         numberOfMembers,
         isUnion,
         email,
-        phoneNumber
+        phoneNumber,
+        instagramUrl,
+        facebookUrl
       } = args;
       
       const club = await prisma.club.create({
@@ -40,7 +42,9 @@ export default {
             numberOfMembers,
             isUnion,
             email,
-            phoneNumber
+            phoneNumber,
+            instagramUrl,
+            facebookUrl
         },
       });
 

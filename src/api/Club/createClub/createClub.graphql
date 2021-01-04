@@ -11,6 +11,8 @@ type Mutation {
     numberOfMembers: Int
     isUnion: Boolean
     email: String
-    phoneNumber: String
+    phoneNumber:  String
+    InstagramUrl: String
+    facebookUrl:  String
   ): Club
 }

@@ -27,6 +27,8 @@ type Club {
   isUnion:              Boolean
   email:                String
   phoneNumber:          String
+  facebookUrl:          String
+  instagramUrl:         String
   posts:                [Post]
   questions:            [Question]
 }
