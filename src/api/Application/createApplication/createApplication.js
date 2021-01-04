@@ -24,7 +24,7 @@ export default {
             }
         });
 
-        Answers.map(async (v) => {
+        await Answers.map(async (v) => {
           await prisma.answer.create({
             data:{
               type:v.type,
@@ -39,7 +39,7 @@ export default {
           });
         });
 
-        return application;
+        return prisma.application.findUnique({where:{id:application.id}})
 
 
       }
