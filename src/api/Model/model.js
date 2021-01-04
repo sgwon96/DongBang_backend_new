@@ -12,11 +12,11 @@ export default {
     posts: (parent) => prisma.post.findMany({where:{authorrId:parent.id}}),
    },
    Post: {
-     author: prisma.club.findUnique({where:{id:parent.authorId}}),
+     author: (parent) => prisma.club.findUnique({where:{id:parent.authorId}}),
    },
    Question: {
     choices: (parent) => prisma.choice.findMany({where:{questionId:parent.id}}),
-    club: prisma.club.findUnique({where:{id:parent.clubId}}),
+    club: (parent) => prisma.club.findUnique({where:{id:parent.clubId}}),
    },
    Choice: {
     question: (parent) => prisma.question.findUnique({where:{id:parent.questionId}})
@@ -24,9 +24,9 @@ export default {
    Application: {
      club: (parent) => prisma.club.findUnique({where:{id:parent.clubId}}),
      answers: (parent) => prisma.answer.findMany({where:{applicationId:parent.id}}),
-     user: prisma.user.findUnique({where:{id:parent.userId}}),
+     user: (parent) => prisma.user.findUnique({where:{id:parent.userId}}),
     },
     Answer: {
-      application: prisma.application.findUnique({where:{id:parent.applicationId}}),
+      application: (parent) => prisma.application.findUnique({where:{id:parent.applicationId}}),
     }
    };
