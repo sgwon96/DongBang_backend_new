@@ -15,6 +15,10 @@ export default {
           email: email,
         },
       });
+      if(user == null){
+        throw Error("일치하는 사용자가 없습니다.");
+      }
+      
       const passwordTrue = await bcrypt.compare(password, user.encryptedPassword);
       if (passwordTrue) {
         console.log(user);
