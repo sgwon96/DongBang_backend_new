@@ -38,6 +38,7 @@ model Club {
   phoneNumber       String?
   facebookUrl       String?
   instagramUrl      String?
+  applications       Application[]
   posts             Post[]       
   questions         Question[]
 }
