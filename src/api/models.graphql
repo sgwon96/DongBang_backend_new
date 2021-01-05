@@ -1,5 +1,5 @@
 type User {
-  id:                   ID!
+  id:                   Int!
   email:                String!
   encryptedPassword:    String!
   name:                 String
@@ -14,7 +14,7 @@ type User {
 }
 
 type Club {
-  id:                   ID!
+  id:                   Int!
   name:                 String
   type:                 String
   description:          String
@@ -35,7 +35,7 @@ type Club {
 }
 
 type Post {
-  id:                   ID!
+  id:                   Int!
   title:                String
   content:              String
   fileUrl:              String
@@ -44,7 +44,7 @@ type Post {
 }
 
 type Question {
-  id:                   ID!       
+  id:                   Int!       
   type:                 String
   title:                String
   index:                Int  
@@ -54,7 +54,7 @@ type Question {
 }
 
 type Choice {
-  id:                   ID!
+  id:                   Int!
   index:                Int  
   subject:              String 
   question:             Question  
@@ -62,7 +62,7 @@ type Choice {
 }
 
 type Application {
-  id:                   ID!
+  id:                   Int!
   answers:              [Answer]
   user:                 User
   userId:               Int 
@@ -71,7 +71,7 @@ type Application {
 }
 
 type Answer {
-  id:                   ID!
+  id:                   Int!
   index:                Int
   type:                 String
   answer:               String
@@ -86,7 +86,7 @@ input AnswerInput {
 }
 
 type Room{
-    id:                 ID!
+    id:                 Int!
     participants:       [User]
     messages:           [Message]
     createdAt:          DateTime
