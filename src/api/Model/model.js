@@ -10,7 +10,7 @@ export default {
    Club: {
     questions: (parent) => prisma.question.findMany({where:{clubId:parent.id}}),
     posts: (parent) => prisma.post.findMany({where:{authorId:parent.id}}),
-    applications: (parent) => prisma.application.findMany({where:{clubId:parent.id}}),
+    applications: (parent) => prisma.application.findMany({where:{clubId:parent.id}})
    },
    Post: {
      author: (parent) => prisma.club.findUnique({where:{id:parent.authorId}}),

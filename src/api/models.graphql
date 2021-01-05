@@ -30,7 +30,7 @@ type Club {
   facebookUrl:          String
   instagramUrl:         String
   posts:                [Post]
-  applications          [Application]
+  applications:          [Application]
   questions:            [Question]
 }
 
