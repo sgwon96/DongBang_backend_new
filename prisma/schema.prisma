@@ -8,22 +8,25 @@ datasource db {
 }
 
 model User {
-  id                Int       @id @default(autoincrement())
-  email             String    @unique 
+  id                Int         @id @default(autoincrement())
+  email             String      @unique 
   encryptedPassword String        
   name              String        
   studentNumber     String        
   phoneNumber       String        
   university        String        
   major             String     
-  clubMaster        Club?     @relation(fields: [clubId], references: [id])
+  clubMaster        Club?       @relation(fields: [clubId], references: [id])
   clubId            Int?
   application       Application[]
-  applicationId     Int?   
+  applicationId     Int?
+  rooms             Room[]      @relation("rooms", references: [id])  
+  fromMessages      Message[]   @relation("fromUser")
+  toMessages        Message[]   @relation("toUser") 
 }
 
 model Club {
-  id                Int       @id @default(autoincrement())
+  id                Int         @id @default(autoincrement())
   name              String          
   type              String        
   description       String?        
@@ -44,46 +47,66 @@ model Club {
 }
 
 model Post {
-  id                Int       @id @default(autoincrement())
+  id                Int           @id @default(autoincrement())
   title             String
   content           String
   fileUrl           String
-  author            Club?     @relation(fields: [authorId], references: [id])
+  author            Club?         @relation(fields: [authorId], references: [id])
   authorId          Int?
 }
 
 model Question {
-  id                Int       @id @default(autoincrement())
+  id                Int           @id @default(autoincrement())
   type              String
   title             String
   index             Int
   choices           Choice[]
-  club              Club      @relation(fields: [clubId], references: [id])
+  club              Club          @relation(fields: [clubId], references: [id])
   clubId            Int
 }
 
 model Choice {
-  id                Int       @id @default(autoincrement())
-  index             Int
+  id                Int           @id @default(autoincrement())
+  index             Int           
   subject           String 
-  question          Question  @relation(fields: [questionId], references: [id])
+  question          Question      @relation(fields: [questionId], references: [id])
   questionId        Int 
 }
 
 model Application {
-  id                Int       @id @default(autoincrement())
+  id                Int           @id @default(autoincrement())
   answers           Answer[]
-  user              User      @relation(fields: [userId], references: [id])
+  user              User          @relation(fields: [userId], references: [id])
   userId            Int 
-  club              Club      @relation(fields: [clubId], references: [id])
+  club              Club          @relation(fields: [clubId], references: [id])
   clubId            Int
 }
 
 model Answer {
-  id                Int         @id @default(autoincrement())
+  id                Int           @id @default(autoincrement())
   index             Int         
   type              String
   answer            String?
-  application       Application @relation(fields: [applicationId], references: [id])
+  application       Application   @relation(fields: [applicationId], references: [id])
   applicationId     Int
+}
+
+model Room{
+    id              Int           @id @default(autoincrement())
+    participants    User[]        @relation("rooms", references: [id])
+    messages        Message[]
+    createdAt       DateTime      @default(now())
+    updatedAt       DateTime      @updatedAt
+}
+
+model Message {
+    id              Int           @id @default(autoincrement())
+    text            String
+    from            User          @relation("fromUser", fields: [fromId], references: [id])
+    to              User          @relation("toUser", fields: [toId], references: [id])
+    room            Room          @relation(fields: [roomId], references: [id])
+    fromId          Int
+    toId            Int
+    roomId          Int
+    createdAt       DateTime      @default(now())   
 }

@@ -44,46 +44,67 @@ type Post {
 }
 
 type Question {
-  id:                ID!       
-  type:              String
-  title:             String
-  index:             Int  
-  choices:           [Choice]
-  club:              Club      
-  clubId:            Int
+  id:                   ID!       
+  type:                 String
+  title:                String
+  index:                Int  
+  choices:              [Choice]
+  club:                 Club      
+  clubId:               Int
 }
 
 type Choice {
-  id:                ID!
-  index:             Int  
-  subject:           String 
-  question:          Question  
-  questionId:        Int
+  id:                   ID!
+  index:                Int  
+  subject:              String 
+  question:             Question  
+  questionId:           Int
 }
 
 type Application {
-  id:                ID!
-  answers:           [Answer]
-  user:              User
-  userId:            Int 
-  club:              Club
-  clubId:            Int
+  id:                   ID!
+  answers:              [Answer]
+  user:                 User
+  userId:               Int 
+  club:                 Club
+  clubId:               Int
 }
 
 type Answer {
-  id:                ID!
-  index:             Int
-  type:              String
-  answer:            String
-  application:       Application
-  applicationId:     Int
+  id:                   ID!
+  index:                Int
+  type:                 String
+  answer:               String
+  application:          Application
+  applicationId:        Int
 }
 
 input AnswerInput {
-  type:             String
-  answer:           String
-  index:            Int
+  type:                 String
+  answer:               String
+  index:                Int
 }
+
+type Room{
+    id:                 ID!
+    participants:       [User]
+    messages:           [Message]
+    createdAt:          DateTime
+    updatedAt:          DateTime
+}
+
+type Message {
+    id:                 Int!
+    text:               String!
+    from:               User!
+    to:                 User!
+    room:               Room!
+    fromId:             Int
+    toId:               Int
+    roomId:             Int
+    created:            DateTime!
+}
+
 
 
 scalar DateTime
