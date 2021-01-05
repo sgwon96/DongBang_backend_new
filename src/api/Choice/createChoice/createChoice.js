@@ -9,6 +9,7 @@ export default {
       const { user } = request;
       const id = user.clubId;
       const {
+        index,
         questionId,
         subject
       } = args;
@@ -27,6 +28,7 @@ export default {
         return prisma.choice.create({
             data: {
                 subject,
+                index,
                 question : {
                     connect:{
                         id: questionId

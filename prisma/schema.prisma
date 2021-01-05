@@ -63,6 +63,7 @@ model Question {
 
 model Choice {
   id                Int       @id @default(autoincrement())
+  index             Int
   subject           String 
   question          Question  @relation(fields: [questionId], references: [id])
   questionId        Int 

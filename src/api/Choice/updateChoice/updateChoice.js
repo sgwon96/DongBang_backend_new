@@ -7,7 +7,7 @@ export default {
     updateChoice: async (_, args, { request, isAuthenticated }) => {
         isAuthenticated(request);
         const { clubId } = request.user;
-        const { id,subject,checked } = args; 
+        const { id,subject,index } = args; 
         const choice = await prisma.choice.findUnique({where:{id:id}});
         const question =  await prisma.question.findUnique({where:{id:choice.questionId}});
 
@@ -18,7 +18,7 @@ export default {
         if(clubId == question.clubId){
             return await prisma.choice.update({
                 where: { id: id },
-                data: { subject }
+                data: { subject, index }
               });
         } else {
             throw Error("선택지 작성자가 아닙니다.");
