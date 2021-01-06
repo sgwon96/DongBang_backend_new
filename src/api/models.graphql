@@ -89,6 +89,7 @@ type Room{
     id:                 Int!
     participants:       [User]
     messages:           [Message]
+    recentMessage:      Message
     createdAt:          DateTime
     updatedAt:          DateTime
 }
