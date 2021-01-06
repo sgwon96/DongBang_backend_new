@@ -32,7 +32,7 @@ export default {
     },
     Room: {
       participants: (parent) => prisma.user.findMany({where:{rooms:{some:{id:parent.id}}}},),
-      messages: (parent) => prisma.message.findMany({where:{roomId:parent.id}}),
+      messages: (parent) => prisma.message.findMany({where:{roomId:parent.id},orderBy: {createdAt: "asc"}}),
       recentMessage:  (parent) => prisma.message.findFirst({where:{roomId:parent.id},orderBy: {createdAt: "desc"}})
     },
     Message: {
