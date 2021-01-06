@@ -2,6 +2,6 @@
     createMessage(
       roomId:     Int
       toId:       Int
-      message:    String!
+      text:    String!
     ): Message
   }

@@ -1,13 +1,14 @@
 import { PrismaClient } from "@prisma/client";
+import {CHANNEL_NEW_MESSAGE} from "../../../constant";
 
 const prisma = new PrismaClient();
 
  export default {
    Mutation: {
-    createMessage: async (_, args, { request, isAuthenticated }) => {
+    createMessage: async (_, args, { request, isAuthenticated, pubsub }) => {
       isAuthenticated(request);
       const { user } = request;
-       const { roomId,toId,message } = args;
+       const { roomId,toId,text } = args;
        let room;
        if (roomId === undefined) {
          if (user.id !== toId) {
@@ -29,9 +30,9 @@ const prisma = new PrismaClient();
         {AND:[{id  : {not:user.id}}, {rooms:{some:{id:room.id}}}]}
       });
 
-       return prisma.message.create({
+       const message = await prisma.message.create({
            data:{
-            text: message,
+            text: text,
             from: {
               connect: { id: user.id }
             },
@@ -47,6 +48,13 @@ const prisma = new PrismaClient();
             }
           }
        });
+
+       pubsub.publish(CHANNEL_NEW_MESSAGE, {
+        newMessage: message,
+        roomId: room.id
+      });
+
+      return message;
      }
    }
  };
