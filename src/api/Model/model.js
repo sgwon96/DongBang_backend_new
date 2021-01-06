@@ -31,7 +31,8 @@ export default {
       application: (parent) => prisma.application.findUnique({where:{id:parent.applicationId}}),
     },
     Room: {
-      participants: (parent) => prisma.user.findMany({where:{rooms:{some:{id:parent.id}}}},)
+      participants: (parent) => prisma.user.findMany({where:{rooms:{some:{id:parent.id}}}},),
+      messages: (parent) => prisma.message.findMany({where:{roomId:parent.id}})
     },
     Message: {
       from: (parent) => prisma.user.findUnique({where:{id:parent.fromId}}),
