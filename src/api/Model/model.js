@@ -8,7 +8,7 @@ export default {
      application: (parent) => prisma.application.findMany({where:{userId:parent.id}}),
    },
    Club: {
-    questions: (parent) => prisma.question.findMany({where:{clubId:parent.id}}),
+    questions: (parent) => prisma.question.findMany({where:{clubId:parent.id},orderBy: {index: "asc"}}),
     posts: (parent) => prisma.post.findMany({where:{authorId:parent.id}}),
     applications: (parent) => prisma.application.findMany({where:{clubId:parent.id}})
    },
@@ -24,7 +24,7 @@ export default {
    },
    Application: {
      club: (parent) => prisma.club.findUnique({where:{id:parent.clubId}}),
-     answers: (parent) => prisma.answer.findMany({where:{applicationId:parent.id}}),
+     answers: (parent) => prisma.answer.findMany({where:{applicationId:parent.id},orderBy: {index: "asc"}}),
      user: (parent) => prisma.user.findUnique({where:{id:parent.userId}}),
     },
     Answer: {
@@ -33,7 +33,7 @@ export default {
     Room: {
       participants: (parent) => prisma.user.findMany({where:{rooms:{some:{id:parent.id}}}},),
       messages: (parent) => prisma.message.findMany({where:{roomId:parent.id}}),
-      recentMessage:  (parent) => prisma.message.findFirst({where:{roomId:parent.id},orderBy: {createdAt: "desc",}})
+      recentMessage:  (parent) => prisma.message.findFirst({where:{roomId:parent.id},orderBy: {createdAt: "desc"}})
     },
     Message: {
       from: (parent) => prisma.user.findUnique({where:{id:parent.fromId}}),
