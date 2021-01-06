@@ -1,0 +1,7 @@
+ type Mutation {
+    createMessage(
+      roomId:     Int
+      toId:       Int
+      message:    String!
+    ): Message
+  }

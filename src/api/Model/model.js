@@ -29,5 +29,12 @@ export default {
     },
     Answer: {
       application: (parent) => prisma.application.findUnique({where:{id:parent.applicationId}}),
+    },
+    Room: {
+      participants: (parent) => prisma.user.findMany({where:{rooms:{some:{id:parent.id}}}},)
+    },
+    Message: {
+      from: (parent) => prisma.user.findUnique({where:{id:parent.fromId}}),
+      to: (parent) => prisma.user.findUnique({where:{id:parent.toId}}),
     }
    };
