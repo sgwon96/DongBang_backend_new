@@ -23,8 +23,7 @@ model User {
   rooms             Room[]      @relation("rooms", references: [id])  
   fromMessages      Message[]   @relation("fromUser")
   toMessages        Message[]   @relation("toUser")
-  joinClub          Club[]      @relation("joinClub", fields: [joinClubId], references: [id])
-  joinClubId        Int?
+  joinClub          Club[]      @relation("joinClub", references: [id])
   
 }
 

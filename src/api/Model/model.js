@@ -6,11 +6,13 @@ export default {
    User: {
      clubMaster: (parent) => prisma.club.findUnique({where:{id:parent.clubId}}),
      application: (parent) => prisma.application.findMany({where:{userId:parent.id}}),
+     joinClub:  (parent) => prisma.club.findMany({where:{members:{some:{id:parent.id}}}}),
    },
    Club: {
     questions: (parent) => prisma.question.findMany({where:{clubId:parent.id},orderBy: {index: "asc"}}),
     posts: (parent) => prisma.post.findMany({where:{authorId:parent.id}}),
-    applications: (parent) => prisma.application.findMany({where:{clubId:parent.id}})
+    applications: (parent) => prisma.application.findMany({where:{clubId:parent.id}}),
+    members: (parent) => prisma.user.findMany({where:{joinClub:{some:{id:parent.id}}}}),
    },
    Post: {
      author: (parent) => prisma.club.findUnique({where:{id:parent.authorId}}),

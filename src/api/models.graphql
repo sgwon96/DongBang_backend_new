@@ -12,8 +12,6 @@ type User {
   application:          [Application]
   applicationId:        Int
   joinClub:             [Club]
-  joinClubId:           Int
-  
 }
 
 type Club {
