@@ -11,6 +11,9 @@ type User {
   clubId:               Int 
   application:          [Application]
   applicationId:        Int
+  joinClub:             [Club]
+  joinClubId:           Int
+  
 }
 
 type Club {
@@ -30,8 +33,9 @@ type Club {
   facebookUrl:          String
   instagramUrl:         String
   posts:                [Post]
-  applications:          [Application]
+  applications:         [Application]
   questions:            [Question]
+  members:              [User]
 }
 
 type Post {

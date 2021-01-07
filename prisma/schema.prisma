@@ -16,13 +16,16 @@ model User {
   phoneNumber       String        
   university        String        
   major             String     
-  clubMaster        Club?       @relation(fields: [clubId], references: [id])
+  clubMaster        Club?       @relation("master",fields: [clubId], references: [id])
   clubId            Int?
   application       Application[]
   applicationId     Int?
   rooms             Room[]      @relation("rooms", references: [id])  
   fromMessages      Message[]   @relation("fromUser")
-  toMessages        Message[]   @relation("toUser") 
+  toMessages        Message[]   @relation("toUser")
+  joinClub          Club[]      @relation("joinClub", fields: [joinClubId], references: [id])
+  joinClubId        Int?
+  
 }
 
 model Club {
@@ -41,9 +44,10 @@ model Club {
   phoneNumber       String?
   facebookUrl       String?
   instagramUrl      String?
-  applications       Application[]
+  applications      Application[]
   posts             Post[]       
   questions         Question[]
+  members           User[]      @relation("joinClub")
 }
 
 model Post {
