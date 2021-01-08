@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export default {
    User: {
-     clubMaster: (parent) => prisma.club.findUnique({where:{id:parent.clubId}}),
+     clubMaster: (parent) => parent.clubId ? prisma.club.findUnique({where:{id:parent.clubId}}) : null,
      application: (parent) => prisma.application.findMany({where:{userId:parent.id}}),
      joinClub:  (parent) => prisma.club.findMany({where:{members:{some:{id:parent.id}}}}),
    },
