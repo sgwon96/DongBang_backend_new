@@ -30,6 +30,7 @@ type Club {
   phoneNumber:          String
   facebookUrl:          String
   instagramUrl:         String
+  master:               User 
   posts:                [Post]
   applications:         [Application]
   questions:            [Question]

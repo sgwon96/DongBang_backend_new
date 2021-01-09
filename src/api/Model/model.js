@@ -13,6 +13,7 @@ export default {
     posts: (parent) => prisma.post.findMany({where:{authorId:parent.id}}),
     applications: (parent) => prisma.application.findMany({where:{clubId:parent.id}}),
     members: (parent) => prisma.user.findMany({where:{joinClub:{some:{id:parent.id}}}}),
+    master:   (parent) => prisma.user.findFirst({where:{clubId:parent.id}}),
    },
    Post: {
      author: (parent) => prisma.club.findUnique({where:{id:parent.authorId}}),
