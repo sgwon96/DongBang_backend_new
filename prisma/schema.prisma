@@ -24,6 +24,7 @@ model User {
   fromMessages      Message[]   @relation("fromUser")
   toMessages        Message[]   @relation("toUser")
   joinClub          Club[]      @relation("joinClub", references: [id])
+  adminClub         Club[]      @relation("adminClub", references: [id])
   
 }
 
@@ -47,6 +48,7 @@ model Club {
   posts             Post[]       
   questions         Question[]
   members           User[]      @relation("joinClub")
+  administrator     User[]      @relation("adminClub")
 }
 
 model Post {

@@ -12,6 +12,7 @@ type User {
   application:          [Application]
   applicationId:        Int
   joinClub:             [Club]
+  adminClub:            [Club]
 }
 
 type Club {
@@ -35,6 +36,7 @@ type Club {
   applications:         [Application]
   questions:            [Question]
   members:              [User]
+  administrator:        [User]
 }
 
 type Post {
