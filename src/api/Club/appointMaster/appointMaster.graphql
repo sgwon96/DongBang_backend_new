@@ -1,0 +1,3 @@
+type Mutation {
+  appointMaster(userId : Int!) : User
+}
