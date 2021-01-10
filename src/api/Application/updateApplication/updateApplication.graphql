@@ -1,0 +1,8 @@
+type Mutation {
+    updateApplication(
+    id:             Int
+    startTime:      String
+    endTime:        String
+    interviewDay:   String
+    ) : Application
+  }

@@ -85,6 +85,9 @@ model Application {
   userId            Int 
   club              Club          @relation(fields: [clubId], references: [id])
   clubId            Int
+  startTime         String?
+  endTime           String?
+  interviewDay      String?
 }
 
 model Answer {

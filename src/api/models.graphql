@@ -73,6 +73,9 @@ type Application {
   userId:               Int 
   club:                 Club
   clubId:               Int
+  startTime:            String
+  endTime:              String
+  interviewDay:         String
 }
 
 type Answer {
