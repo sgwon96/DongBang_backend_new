@@ -13,11 +13,7 @@ export default {
             throw Error("로그인 된 사용자는 동아리 회장이 아닙니다.");
         }
         
-        try {
-            
-        } catch (error) {
-            
-        }
+        
         const returnValue = id.map(async (v) => {
         const application = await prisma.application.findUnique({where:{id:v}});
         if(application == null){
