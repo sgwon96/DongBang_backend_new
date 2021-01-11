@@ -1,3 +1,3 @@
 type Mutation {
-  joinClub(userId : Int!) : User
+  joinClub(applicationId : Int!) : User
 }
