@@ -19,7 +19,7 @@ const upload = multer({
     key: function(req, file, cb) {
       cb(null, Date.now().toString());
     },
-    ContentType:'image/png',
+contentType: multerS3.AUTO_CONTENT_TYPE,
   })
 });
 
@@ -29,6 +29,8 @@ export const uploadController = (req, res) => {
   const {
     file: { location }
   } = req;
-  console.log(location)
+  console.log(location);
+console.log(req);
   res.json({ location });
+
 };
