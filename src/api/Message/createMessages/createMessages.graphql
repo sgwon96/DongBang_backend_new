@@ -1,0 +1,6 @@
+ type Mutation {
+    createMessages(
+      toIds:       [Int]
+      text:    String!
+    ): [Message]
+  }
