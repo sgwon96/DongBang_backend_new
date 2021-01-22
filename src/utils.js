@@ -56,4 +56,39 @@ export const generateSecret = () => {
     return sendMail(email);
   };
 
+  export const sendNotificationMail = (adress, club, url) => {
+    const site_title_top = "동방";
+    const site_title_content = "동방";
+    const point_color = "#FF7300";
+    const email = {
+      from: "zxcvb5434@likelion.org",
+      to: adress,
+      subject: `"${club}에서 메세지를 보냈습니다."`,
+      html: `
+      <div style="font-family: 'Apple SD Gothic Neo', 'sans-serif'; width: 540px; height: 600px; border-top: 4px solid ${point_color}; margin: 100px auto; padding: 30px 0; box-sizing: border-box;">
+	<h1 style="margin: 0; padding: 0 5px; font-size: 28px; font-weight: 400;">
+		<span style="font-size: 15px; margin: 0 0 10px 3px;">${site_title_top}</span><br />
+		<span style="color: ${point_color};">${club}</span>에서 메세지를 보냈습니다.
+	</h1>
+	<p style="font-size: 16px; line-height: 26px; margin-top: 50px; padding: 0 5px;">
+		안녕하세요.<br />
+		${club}에 지원해 주셔서 진심으로 감사드립니다.<br />
+	  1차 서류 전형에 합격하셨습니다. 자세한 사항은 메세지함에서 확인하세요<br />
+		감사합니다.
+	</p>
+
+	<p style="font-size: 16px; margin: 40px 5px 20px; line-height: 28px;">
+		사이트: <br />
+		<span style="font-size: 24px;"><a style="href="${url}" target="_blank">${url}</a></span>
+	</p>
+
+	<div style="border-top: 1px solid #DDD; padding: 5px;">
+	</div>
+</div>
+      `
+    };
+    return sendMail(email);
+  };
+
+
 export const generateToken = id => jwt.sign({ id }, process.env.JWT_SECRET);

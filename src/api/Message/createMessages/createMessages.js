@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import {CHANNEL_NEW_MESSAGE} from "../../../constant";
+import { sendNotificationMail } from "../../../utils";
 
 const prisma = new PrismaClient();
 
@@ -9,12 +10,12 @@ const prisma = new PrismaClient();
       isAuthenticated(request);
         const { user } = request;
         const { toIds,text } = args;
+        const club = await prisma.club.findUnique({where:{id:user.clubId}});
         const messages = await toIds.map(async (toId) => {
         const existUser = await prisma.user.findUnique({where:{id:toId}});
         if(existUser == null){
             return null;
         }
-        
         let room = await prisma.room.findFirst({where:{AND:[{participants:{some:{id:user.id}}},{participants:{some:{id:toId}}}]}});
         if (room === null) {
          if (user.id !== toId) {
@@ -50,7 +51,7 @@ const prisma = new PrismaClient();
         newMessage: message,
         roomId: room.id
       });
-
+      sendNotificationMail(existUser.email,club.name,"www.dongbang.com" )
       return message
     })
       return messages;
