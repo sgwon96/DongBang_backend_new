@@ -114,6 +114,16 @@ type Message {
     createdAt:          DateTime
 }
 
+input QuestionInput {
+    id:                 Int!  
+    index:              Int
+    title:              String
+    type:               String
+    choiceIds:          [Int]
+    choiceSubjects:     [String]
+}
+
+
 
 
 scalar DateTime
