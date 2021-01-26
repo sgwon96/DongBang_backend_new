@@ -22,6 +22,9 @@ const prisma = new PrismaClient();
               });
               return await prisma.question.findUnique({where:{id:id}});
            } else if (question.type == "multiple"){
+                if (choiceIds == null){
+                    return await prisma.question.update({where:{id:id},data:{index,title}});
+                }
                 await choiceIds.map(async (choiceId,index) => {  
                    try{
                     const choice = await prisma.choice.findUnique({where:{id:choiceId}});
