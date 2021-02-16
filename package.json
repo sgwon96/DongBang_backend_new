@@ -7,7 +7,7 @@
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
-    "@prisma/client": "^2.13.0",
+    "@prisma/client": "2.13.0",
     "aws-sdk": "2.817.0",
     "bcrypt": "5.0.0",
     "cors": "2.8.5",
@@ -28,7 +28,8 @@
   },
   "devDependencies": {
     "@prisma/cli": "2.13.0",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "prisma": "2.16.1"
   },
   "scripts": {
     "dev": "nodemon --exec babel-node src/server.js",

@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["nativeTypes"]
 }
 
 datasource db {
@@ -32,7 +33,7 @@ model Club {
   id                Int         @id @default(autoincrement())
   name              String          
   type              String        
-  description       String?        
+  description       String?     @db.LongText    
   content           String?       
   clubImage         String?        
   logoImage         String?  
