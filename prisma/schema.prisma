@@ -33,8 +33,8 @@ model Club {
   id                Int         @id @default(autoincrement())
   name              String          
   type              String        
-  description       String?     @db.LongText    
-  content           String?       
+  description       String?    
+  content           String?     @db.LongText 
   clubImage         String?        
   logoImage         String?  
   partyDay          String?   
