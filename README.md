@@ -49,7 +49,7 @@
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/HYDongBang/dongbang
+   git clone. https://github.com/sgwon96/DongBang_backend_new
    ```
 2. Install Yarn packages
    ```sh
